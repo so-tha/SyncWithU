@@ -5,7 +5,19 @@ function App() {
 
   return (
     <> 
-    <nav>
+    <header className="main-header">
+      <div className="header-left">
+        <span className="logo">SyncWithU</span>
+      </div>
+
+      <div className="header-right">
+        <nav className="header-nav">
+          <a href="#">Edit Profile</a>
+          <a href="#">Logout</a>
+        </nav>
+      </div>
+    </header>
+    <nav className="main-card">
       <div className='top'>
         <div className='top-photo-name-add'>
           <img src={profileImage} alt="profile photo" />
