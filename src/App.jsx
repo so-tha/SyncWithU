@@ -1,33 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import profileImage from './assets/images/profile/profile.png'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
+    <> 
+    <nav>
+      <div className='top'>
+        <div className='top-photo-name-add'>
+          <img src={profileImage} alt="profile photo" />
+          <h2 className='name-above-photo'>Theodora Coelho</h2>
+          <p className='job-address'>Doctor specializing in mental health</p>
+          <p className='job-address'>Rua Ricardo José, 200, Visconde do Rio Branco</p>
+        </div>
+      </div>  
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+        <h2 className='about'>About</h2>
+        <p className='about-text'>Experienced software engineer with a passion for creating innovative solutions. Skilled in various programming languages and frameworks, with a focus on developing scalable and efficient applications. Committed to continuous learning and staying up-to-date with the latest industry trends.</p>
+      </div>    
+    </nav>
     </>
   )
 }
