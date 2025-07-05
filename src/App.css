@@ -151,5 +151,61 @@ nav {
 }
 
 .main-card {
-  margin-top: 80px; /* Espaço para o header fixo */
+  margin-top: 80px; 
+}
+
+.edit-input, .edit-textarea {
+  width: 100%;
+  max-width: 420px;
+  margin: 6px 0;
+  padding: 10px 12px;
+  border: 1.5px solid #bfc9d9;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: 'Manrope', Arial, Helvetica, sans-serif;
+  color: #222;
+  background: #f7fafc;
+  box-sizing: border-box;
+  transition: border 0.2s;
+}
+
+.edit-input:focus, .edit-textarea:focus {
+  border: 1.5px solid #1976d2;
+  outline: none;
+}
+
+.edit-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.edit-photo-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.edit-photo {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #e6eaf0;
+  background: #f7fafc;
+  margin-bottom: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.edit-photo-label:hover .edit-photo {
+  opacity: 1;
+}
+
+.edit-photo-btn {
+  font-size: 13px;
+  color: #1976d2;
+  text-decoration: underline;
+  cursor: pointer;
 }

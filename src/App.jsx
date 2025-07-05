@@ -12,7 +12,7 @@ function App() {
 
       <div className="header-right">
         <nav className="header-nav">
-          <a href="#">Edit Profile</a>
+          <a href="/edit-profile">Edit Profile</a>
           <a href="#">Logout</a>
         </nav>
       </div>
