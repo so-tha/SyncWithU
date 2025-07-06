@@ -50,7 +50,7 @@ function App() {
         {isEditing ? (
           <textarea className="edit-textarea" defaultValue="Experienced software engineer with a passion for creating innovative solutions. Skilled in various programming languages and frameworks, with a focus on developing scalable and efficient applications. Committed to continuous learning and staying up-to-date with the latest industry trends." />
         ) : (
-          <p className='about-text'>Experienced software engineer with a passion for creating innovative solutions. Skilled in various programming languages and frameworks, with a focus on developing scalable and efficient applications. Committed to continuous learning and staying up-to-date with the latest industry trends.</p>
+          <p className='about-text'>Experienced software engineer with a passion for creating innovative solutions. Skilled in various programming languages and frameworks, with a focus on developing scalable and efficient applications. Committed to continuous learning and staying up-to-date with the latest industry trends. Experienced software engineer with a passion for creating innovative solutions. Skilled in various programming languages and frameworks, with a focus on developing scalable and efficient applications. Committed to continuous learning and staying up-to-date with the latest industry trends. </p>
         )}
       </div>    
     </nav>
