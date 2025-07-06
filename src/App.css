@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #f7fafc;
+
 
 }
 
@@ -16,9 +16,8 @@
 
 body {
   font-family: 'Manrope', Arial, Helvetica, sans-serif;
-  background: #f7fafc;
   color: #0D141C;
-  
+  background: #ebf0f5;
 }
 
 .main-header {
@@ -47,6 +46,8 @@ body {
 .header-nav {
   display: flex;
   gap: 24px;
+  display: flex;
+  flex-direction: row;
 }
 
 .header-nav a {
@@ -65,6 +66,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  border: none;
 }
 
 .menu-btn {
@@ -91,14 +93,13 @@ body {
 nav {
   width: 100%;
   max-width: 480px;
-  margin: 40px auto 0 auto;
-  background: #fff;
+  margin: 40px auto 30px auto;
   border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
   padding: 40px 32px 32px 32px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 
 .top-photo-name-add {
@@ -113,16 +114,30 @@ nav {
   height: 112px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #e6eaf0;
+  border: 4px solid #1976d2;
   background: #f7fafc;
   margin-bottom: 8px;
 }
 
+.name-age-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+
+.age {
+  font-size: 18px;
+  font-weight: 500;
+  color: #4A739C;
+  margin-left: 4px;
+}
 .name-above-photo {
   font-size: 22px;
   font-weight: 700;
   color: #0D141C;
   margin-bottom: 2px;
+  flex-direction: row;
 }
 
 .job-address {
@@ -136,7 +151,7 @@ nav {
   font-weight: 700;
   color: #0D141C;
   margin: 32px 0 8px 0;
-  text-align: left;
+  text-align: center;
   width: 100%;
 }
 
@@ -151,7 +166,18 @@ nav {
 }
 
 .main-card {
-  margin-top: 80px; 
+  margin-top: 100px;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.10), 0 1.5px 8px rgba(0,0,0,0.04);
+  background: #fff;
+  border-radius: 28px;
+  padding: 56px 40px 48px 40px;
+  max-width: 540px;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, background 0.2s;
 }
 
 .edit-input, .edit-textarea {
@@ -209,3 +235,4 @@ nav {
   text-decoration: underline;
   cursor: pointer;
 }
+
