@@ -122,7 +122,6 @@ nav {
 .name-age-row {
   display: flex;
   align-items: center;
-  gap: 8px;
   justify-content: center;
 }
 
@@ -130,7 +129,6 @@ nav {
   font-size: 18px;
   font-weight: 500;
   color: #4A739C;
-  margin-left: 2px;
 }
 .name-above-photo {
   font-size: 22px;
@@ -141,7 +139,7 @@ nav {
 }
 
 .job-address {
-  font-size: 14px;
+  font-size: 15px;
   color: #4A739C;
   margin-bottom: 0;
 }
@@ -197,6 +195,7 @@ nav {
   transition: border 0.2s;
 }
 
+
 .edit-input:focus, .edit-textarea:focus {
   border: 1.5px solid #1976d2;
   outline: none;
@@ -204,9 +203,10 @@ nav {
 
 .edit-textarea {
   margin-left: 15px;
-  min-height: 85px;
-  max-width: 230px;
+  min-height: 370px;
+  max-width: 400px;
   resize: none;
+  overflow: hidden;
 }
 
 .edit-photo-label {
