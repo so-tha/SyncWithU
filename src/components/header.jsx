@@ -1,4 +1,4 @@
-export default function Header({ isEditing, setIsEditing, showNav = true }) {
+export default function Header({ isEditing, setIsEditing, showNav = true, onLogout }) {
   return (
     <header className="main-header">
 <div className="header-left">
@@ -14,7 +14,9 @@ export default function Header({ isEditing, setIsEditing, showNav = true }) {
     >
       {isEditing ? "Save" : "Edit Profile"}
     </a>
-    <a href="#">Logout</a>
+    <a href="#" onClick={e => { e.preventDefault(); onLogout && onLogout(); }}>
+      Logout
+    </a>
   </nav>
 </div>
 )}

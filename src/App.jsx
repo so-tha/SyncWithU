@@ -1,14 +1,14 @@
 import './App.css'
-import Header from './components/header'
-import MainCard from './components/main-card'
+import { Routes, Route } from 'react-router-dom'
 import LoginPage from './login-page'
+import EditProfile from './edit-profile'
 
 function App() {
-
   return (
-    <> 
-    <LoginPage />
-    </>
+    <Routes>
+      <Route path="/" element={<LoginPage />} />
+      <Route path="/profile" element={<EditProfile />} />
+    </Routes>
   )
 }
 
