@@ -9,7 +9,7 @@ function EditProfile() {
 
   return (
     <> 
-    <Header isEditing={isEditing} setIsEditing={setIsEditing} />
+    <Header isEditing={isEditing} setIsEditing={setIsEditing} showNav={true} />
   <MainCard isEditing={isEditing} profileImage={profileImage} />
     </>
   )

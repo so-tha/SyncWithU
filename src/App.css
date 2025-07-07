@@ -239,4 +239,45 @@ nav {
   text-decoration: underline;
   cursor: pointer;
 }
+.login-title{
+  font-size: 22px;
+  font-weight: 700;
+  color: #1976d2;
+  margin-bottom: 24px;
+  text-align: justify;
+  font-family: 'Manrope', Arial, Helvetica, sans-serif;
+  
+}
+.login-form {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 420px;
+  padding: 10px;
+  margin-left: 20px;
+}
 
+.login-input{
+  border: 1.5px solid #bfc9d9;
+  border-radius: 8px;
+  padding: 10px 10px;
+  font-size: 14px;
+  font-family: 'Manrope', Arial, Helvetica, sans-serif;
+}
+
+.login-btn{
+  border: 2px solid #1976d2;
+  outline: none;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 15px;
+  font-family: 'Manrope', Arial, Helvetica, sans-serif;
+  color: #1976d2;
+  background: #d8efff;
+  box-sizing: border-box;
+  transition: border 0.2s;
+  cursor: pointer;
+}

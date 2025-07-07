@@ -1,10 +1,10 @@
-
-export default function Header({ isEditing, setIsEditing }) {
+export default function Header({ isEditing, setIsEditing, showNav = true }) {
   return (
     <header className="main-header">
 <div className="header-left">
   <span className="logo">SyncWithU</span>
 </div>
+{showNav && (
 <div className="header-right">
   <nav className="header-nav">
     <a
@@ -17,6 +17,7 @@ export default function Header({ isEditing, setIsEditing }) {
     <a href="#">Logout</a>
   </nav>
 </div>
+)}
 </header>
   )
 }
