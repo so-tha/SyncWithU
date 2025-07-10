@@ -47,7 +47,7 @@ class UsuarioController {
 
   static async criar(req, res) {
     try {
-      const { nome, email, senha, idade, ocupacao, endereco, descricao } = req.body;
+      const { nome, email, senha, idade, ocupacao, endereco, descricao, foto } = req.body;
       
       if (!nome || !email || !senha) {
         return res.status(400).json({
@@ -71,7 +71,8 @@ class UsuarioController {
         idade,
         ocupacao,
         endereco,
-        descricao
+        descricao,
+        foto
       });
 
       res.status(201).json({
@@ -84,7 +85,8 @@ class UsuarioController {
           idade: novoUsuario.idade,
           ocupacao: novoUsuario.ocupacao,
           endereco: novoUsuario.endereco,
-          descricao: novoUsuario.descricao
+          descricao: novoUsuario.descricao,
+          foto: novoUsuario.foto
         }
       });
     } catch (error) {
@@ -99,7 +101,7 @@ class UsuarioController {
   static async atualizar(req, res) {
     try {
       const { id } = req.params;
-      const { nome, email, idade, ocupacao, endereco, descricao } = req.body;
+      const { nome, email, idade, ocupacao, endereco, descricao, foto } = req.body;
       
       if (!nome || !email) {
         return res.status(400).json({
@@ -114,13 +116,54 @@ class UsuarioController {
         idade,
         ocupacao,
         endereco,
-        descricao
+        descricao,
+        foto
       });
 
       res.status(200).json({
         success: true,
         message: 'Usuário atualizado com sucesso',
         data: usuarioAtualizado
+      });
+    } catch (error) {
+      if (error.message === 'Usuário não encontrado') {
+        return res.status(404).json({
+          success: false,
+          message: error.message
+        });
+      }
+      res.status(500).json({
+        success: false,
+        message: 'Erro interno do servidor',
+        error: error.message
+      });
+    }
+  }
+
+  static async uploadFoto(req, res) {
+    try {
+      const { id } = req.params;
+      
+      if (!req.file) {
+        return res.status(400).json({
+          success: false,
+          message: 'Nenhuma imagem foi enviada'
+        });
+      }
+
+      const fotoPath = `/uploads/${req.file.filename}`;
+      
+      const usuarioAtualizado = await Usuario.atualizar(id, {
+        foto: fotoPath
+      });
+
+      res.status(200).json({
+        success: true,
+        message: 'Foto de perfil atualizada com sucesso',
+        data: {
+          ...usuarioAtualizado,
+          foto: fotoPath
+        }
       });
     } catch (error) {
       if (error.message === 'Usuário não encontrado') {

@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static('public/uploads'));
 
 
 app.get('/', (req, res) => {
@@ -22,7 +23,8 @@ app.get('/', (req, res) => {
       'GET /usuario/:id': 'Buscar usuário por ID',
       'POST /usuario': 'Criar novo usuário',
       'PUT /usuario/:id': 'Atualizar usuário',
-      'DELETE /usuario/:id': 'Deletar usuário'
+      'DELETE /usuario/:id': 'Deletar usuário',
+      'POST /usuario/:id/foto': 'Upload de foto de perfil'
     }
   });
 });
