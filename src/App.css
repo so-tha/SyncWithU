@@ -82,6 +82,22 @@ body {
   justify-content: center;
 }
 
+.edit-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1976d2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logout-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1976d2;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .header-profile {
   width: 32px;
   height: 32px;
@@ -164,7 +180,6 @@ nav {
   max-width: 420px;
   margin-left: 20px;
 }
-
 .main-card {
   margin-top: 100px;
   margin-bottom: 40px;
@@ -202,9 +217,8 @@ nav {
 }
 
 .edit-textarea {
-  margin-left: 15px;
-  min-height: 370px;
-  max-width: 400px;
+  min-height: 200px;
+  max-width: 420px;
   resize: none;
   overflow: hidden;
 }

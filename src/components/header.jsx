@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Header({ showNav = true, isEditing = false, setIsEditing = null, onLogout = null }) {
+function Header({  isEditing = false, setIsEditing = null, onLogout = null }) {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
@@ -13,12 +13,6 @@ function Header({ showNav = true, isEditing = false, setIsEditing = null, onLogo
         <span className="logo">SyncWithU</span>
       </div>
       
-      {showNav && (
-        <nav className="header-nav">
-          <a href="/profile">Perfil</a>
-          <a href="/edit">Editar</a>
-        </nav>
-      )}
       
       <div className="header-right">
         {isEditing && setIsEditing && (
@@ -31,20 +25,20 @@ function Header({ showNav = true, isEditing = false, setIsEditing = null, onLogo
         )}
         
         {!isEditing && setIsEditing && (
-          <button 
-            className="menu-btn"
+          <a 
+            className="edit-text"
             onClick={() => setIsEditing(true)}
           >
-            ✏️
-          </button>
+            Editar Perfil
+          </a>
         )}
         
-        <button 
-          className="menu-btn"
+        <a
+          className="logout-text"
           onClick={onLogout || handleLogout}
         >
-          🚪
-        </button>
+         Sair
+        </a>
       </div>
     </header>
   );
