@@ -50,7 +50,18 @@ async function testEndpoints() {
     console.log(chalk.blue(`\nDELETE /usuario/${usuarioId}`));
     console.log(usuarioDeletado.data);
 
-    
+    // 7. Buscar usuário por email (exemplo)
+    const usuarioPorEmail = await api.get('/usuario/email', {
+      params: {
+        email: 'novo@exemplo.com'
+      }
+    });
+    console.log(chalk.blue(`\nGET /usuario/email`));
+
+    // 8. Buscar usuário por ID (exemplo)
+    const usuarioPorId = await api.get(`/usuario/${usuarioId}`);
+    console.log(chalk.blue(`\nGET /usuario/${usuarioId}`));
+    console.log(usuarioPorId.data);
    
 
   } catch (error) {
