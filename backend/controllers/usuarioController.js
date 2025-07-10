@@ -1,4 +1,5 @@
 import Usuario from '../models/Usuario.js';
+import jwt from 'jsonwebtoken';
 
 class UsuarioController {
   static async listarTodos(req, res) {
@@ -155,6 +156,54 @@ class UsuarioController {
         });
       }
       
+      res.status(500).json({
+        success: false,
+        message: 'Erro interno do servidor',
+        error: error.message
+      });
+    }
+  }
+
+  static async login(req, res) {
+    try {
+      const { email, senha } = req.body;
+      
+      if (!email || !senha) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email e senha são obrigatórios'
+        });
+      }
+
+      const usuario = await Usuario.autenticar(email, senha);
+      
+      if (!usuario) {
+        return res.status(401).json({
+          success: false,
+          message: 'Email ou senha inválidos'
+        });
+      }
+
+      // Gerar token JWT
+      const token = jwt.sign(
+        { 
+          id: usuario.id, 
+          email: usuario.email 
+        },
+        process.env.JWT_SECRET || 'sua_chave_secreta_aqui',
+        { expiresIn: '24h' }
+      );
+
+      res.status(200).json({
+        success: true,
+        message: 'Login realizado com sucesso',
+        data: {
+          usuario,
+          token
+        }
+      });
+    } catch (error) {
+      console.error('Erro no login:', error);
       res.status(500).json({
         success: false,
         message: 'Erro interno do servidor',

@@ -1,4 +1,5 @@
 import pool from '../config/database.js';
+import bcrypt from 'bcryptjs';
 
 class Usuario {
   static async listarTodos() {
@@ -37,10 +38,12 @@ class Usuario {
   static async criar(dadosUsuario) {
     try {
       const { nome, email, senha, telefone, idade } = dadosUsuario;
+      const saltRounds = 10;
+      const senhaHash = await bcrypt.hash(senha, saltRounds);
       
       const [result] = await pool.execute(
         'INSERT INTO usuarios (nome, email, senha, telefone, idade) VALUES (?, ?, ?, ?, ?)',
-        [nome, email, senha, telefone, idade]
+        [nome, email, senhaHash, telefone, idade]
       );
       
       return { id: result.insertId, ...dadosUsuario };
@@ -85,6 +88,32 @@ class Usuario {
       return { message: 'Usuário deletado com sucesso' };
     } catch (error) {
       throw new Error(`Erro ao deletar usuário: ${error.message}`);
+    }
+  }
+
+  static async autenticar(email, senha) {
+    try {
+      const usuario = await this.buscarPorEmail(email);
+      
+      if (!usuario) {
+        return null;
+      }
+
+      const senhaValida = await bcrypt.compare(senha, usuario.senha);
+      
+      if (!senhaValida) {
+        return null;
+      }
+
+      return {
+        id: usuario.id,
+        nome: usuario.nome,
+        email: usuario.email,
+        telefone: usuario.telefone,
+        idade: usuario.idade
+      };
+    } catch (error) {
+      throw new Error(`Erro na autenticação: ${error.message}`);
     }
   }
 }
