@@ -37,13 +37,16 @@ class Usuario {
 
   static async criar(dadosUsuario) {
     try {
-      const { nome, email, senha, telefone, idade } = dadosUsuario;
+      const { nome, email, senha, idade } = dadosUsuario;
       const saltRounds = 10;
       const senhaHash = await bcrypt.hash(senha, saltRounds);
       
+      // Tratar campos vazios
+      const idadeProcessada = idade && idade !== '' ? parseInt(idade) : null;
+      
       const [result] = await pool.execute(
-        'INSERT INTO usuarios (nome, email, senha, telefone, idade) VALUES (?, ?, ?, ?, ?)',
-        [nome, email, senhaHash, telefone, idade]
+        'INSERT INTO usuarios (nome, email, senha, idade) VALUES (?, ?, ?, ?)',
+        [nome, email, senhaHash, idadeProcessada]
       );
       
       return { id: result.insertId, ...dadosUsuario };
@@ -57,11 +60,13 @@ class Usuario {
 
   static async atualizar(id, dadosUsuario) {
     try {
-      const { nome, email, telefone, idade } = dadosUsuario;
+      const { nome, email,idade } = dadosUsuario;
+      const idadeProcessada = idade && idade !== '' ? parseInt(idade) : null;
+      
       
       const [result] = await pool.execute(
         'UPDATE usuarios SET nome = ?, email = ?, telefone = ?, idade = ? WHERE id = ?',
-        [nome, email, telefone, idade, id]
+        [nome, email, idadeProcessada, id]
       );
       
       if (result.affectedRows === 0) {
@@ -109,7 +114,7 @@ class Usuario {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
-        telefone: usuario.telefone,
+
         idade: usuario.idade
       };
     } catch (error) {

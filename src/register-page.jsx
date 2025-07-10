@@ -26,13 +26,18 @@ function RegisterPage() {
     setErro('');
     setCarregando(true);
 
+    const dadosParaEnvio = {
+      ...formData,
+      idade: formData.idade ? parseInt(formData.idade) : null
+    };
+
     try {
       const response = await fetch('http://localhost:3001/api/usuario', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dadosParaEnvio),
       });
 
       const data = await response.json();
