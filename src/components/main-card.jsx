@@ -40,7 +40,7 @@ function MainCard({ isEditing, profileImage }) {
     };
     
     try {
-      const response = await fetch(`http://localhost:3001/api/usuario/${usuario.id}`, {
+      const response = await fetch(`https://syncwithu.onrender.com/api/usuario/${usuario.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ function MainCard({ isEditing, profileImage }) {
     formData.append('foto', file);
 
     try {
-      const response = await fetch(`http://localhost:3001/api/usuario/${usuario.id}/foto`, {
+      const response = await fetch(`https://syncwithu.onrender.com/api/usuario/${usuario.id}/foto`, {
         method: 'POST',
         headers: {
           ...(token ? { Authorization: `Bearer ${token}` } : {})
@@ -93,7 +93,7 @@ function MainCard({ isEditing, profileImage }) {
       const data = await response.json();
 
       if (data.success) {
-        setFotoPerfil(`http://localhost:3001${data.data.foto}`);
+        setFotoPerfil(`https://syncwithu.onrender.com${data.data.foto}`);
         const usuarioAtualizado = {
           ...usuario,
           foto: data.data.foto
@@ -118,7 +118,7 @@ function MainCard({ isEditing, profileImage }) {
     <nav className='main-card'>
       <div className='top-photo-name-add'>
         <img 
-          src={fotoPerfil && fotoPerfil !== 'undefined' ? (fotoPerfil.startsWith('http') ? fotoPerfil : `http://localhost:3001${fotoPerfil}`) : profileImage} 
+          src={fotoPerfil && fotoPerfil !== 'undefined' ? (fotoPerfil.startsWith('http') ? fotoPerfil : `https://syncwithu.onrender.com${fotoPerfil}`) : profileImage} 
           alt="Foto do perfil" 
         />
         {isEditing && (

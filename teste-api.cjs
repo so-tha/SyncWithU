@@ -2,7 +2,7 @@ const axios = require('axios');
 const chalk = require('chalk');
 
 const api = axios.create({
-  baseURL: 'http://localhost:3001/api',
+  baseURL: 'https://syncwithu.onrender.com',
   timeout: 5000,
 });
 

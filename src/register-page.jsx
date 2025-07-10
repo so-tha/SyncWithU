@@ -35,7 +35,7 @@ function RegisterPage() {
     };
 
     try {
-      const response = await fetch('http://localhost:3001/api/usuario', {
+      const response = await fetch('https://syncwithu.onrender.com/api/usuario', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
