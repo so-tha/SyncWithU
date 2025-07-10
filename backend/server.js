@@ -3,8 +3,16 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import usuarioRoutes from './routes/usuarioRoutes.js';
 import { testConnection, createTables } from './config/database.js';
+import path from 'path';
+import fs from 'fs';
 
 dotenv.config();
+
+const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
