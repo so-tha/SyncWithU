@@ -10,6 +10,7 @@ function MainCard({ isEditing, profileImage }) {
     endereco: usuario?.endereco || '',
     sobre: usuario?.descricao || ''
   });
+  const [fotoPerfil, setFotoPerfil] = useState(usuario?.foto || profileImage);
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState('');
   const prevIsEditing = useRef(isEditing);
@@ -67,6 +68,39 @@ function MainCard({ isEditing, profileImage }) {
     }
   };
 
+  const handleFotoChange = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('foto', file);
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/usuario/${usuario.id}/foto`, {
+        method: 'POST',
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setFotoPerfil(`http://localhost:3001${data.data.foto}`);
+        const usuarioAtualizado = {
+          ...usuario,
+          foto: data.data.foto
+        };
+        localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado));
+      } else {
+        setErro(data.message || 'Erro ao fazer upload da foto');
+      }
+    } catch {
+      setErro('Erro de conexão ao fazer upload da foto.');
+    }
+  };
+
   const handleInputChange = (field, value) => {
     setProfileData(prev => ({
       ...prev,
@@ -77,8 +111,19 @@ function MainCard({ isEditing, profileImage }) {
   return (
     <nav className='main-card'>
       <div className='top-photo-name-add'>
-        <img src={profileImage} alt="Foto do perfil" />
-        
+        <img 
+          src={fotoPerfil && fotoPerfil !== 'undefined' ? (fotoPerfil.startsWith('http') ? fotoPerfil : `http://localhost:3001${fotoPerfil}`) : profileImage} 
+          alt="Foto do perfil" 
+        />
+        {isEditing && (
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFotoChange}
+            id="foto-input"
+            style={{ marginTop: 8 }}
+          />
+        )}
         {isEditing ? (
           <div className='edit-fields'>
             <input
