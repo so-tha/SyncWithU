@@ -15,7 +15,7 @@ function EditProfile() {
 
   return (
     <> 
-    <Header isEditing={isEditing} setIsEditing={setIsEditing} showNav={true} onLogout={handleLogout} />
+  <Header isEditing={isEditing} setIsEditing={setIsEditing} showNav={true} onLogout={handleLogout} />
   <MainCard isEditing={isEditing} profileImage={profileImage} />
     </>
   )
