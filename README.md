@@ -167,6 +167,9 @@ backend/
 | email | VARCHAR(100) | Email único do usuário |
 | senha | VARCHAR(255) | Senha do usuário |
 | data_nascimento | DATE | Data de nascimento (opcional) |
+| rua | VARCHAR(255) | |
+| bairro | VARCHAR(255) | |
+| estado | VARCHAR(255) | |
 | foto | varchar(255) | Foto de perfil do usuário (opcional)
 | created_at | TIMESTAMP | Data de criação |
 | updated_at | TIMESTAMP | Data de atualização |
