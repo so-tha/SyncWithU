@@ -1,4 +1,4 @@
-# 🚀 API SyncWithU - Backend
+# API SyncWithU 
 
 Esta é a API backend para o projeto SyncWithU, desenvolvida em Node.js com Express e MySQL.
 
@@ -73,7 +73,7 @@ npm run api:dev
 npm run api
 ```
 
-A API estará disponível em: `http://localhost:3001`
+A API estará disponível em: ``
 
 ## 📚 Endpoints da API
 
@@ -129,21 +129,23 @@ curl -X PUT http://localhost:3001/api/usuario/1 \
 curl -X DELETE http://localhost:3001/api/usuario/1
 ```
 
-## 🏗️ Estrutura do projeto
+## 🏗️ Estrutura do backend do projeto
 
 ```
 backend/
 ├── config/
-│   └── database.js      # Configuração do banco de dados
+│   └── database.js     
 ├── controllers/
-│   └── usuarioController.js  # Lógica de negócio
+│   └── usuarioController.js  
+├── middleware/
+│   └── Upload.js
 ├── models/
-│   └── Usuario.js       # Modelo de dados
+│   └── Usuario.js       
 ├── routes/
-│   └── usuarioRoutes.js # Definição das rotas
-├── server.js            # Servidor principal
-├── .env                 # Variáveis de ambiente
-└── README.md           # Esta documentação
+│   └── usuarioRoutes.js 
+├── server.js            
+├── .env                
+└── README.md          
 ```
 
 ## 🔧 Tecnologias utilizadas
@@ -164,30 +166,8 @@ backend/
 | nome | VARCHAR(100) | Nome do usuário |
 | email | VARCHAR(100) | Email único do usuário |
 | senha | VARCHAR(255) | Senha do usuário |
-| telefone | VARCHAR(20) | Telefone (opcional) |
 | data_nascimento | DATE | Data de nascimento (opcional) |
+| foto | varchar(255) | Foto de perfil do usuário (opcional)
 | created_at | TIMESTAMP | Data de criação |
 | updated_at | TIMESTAMP | Data de atualização |
 
-## 🚨 Observações importantes
-
-1. **Segurança**: Em produção, sempre criptografe as senhas usando bcrypt ou similar
-2. **Validação**: Implemente validação mais robusta dos dados de entrada
-3. **Autenticação**: Adicione sistema de autenticação (JWT, sessions, etc.)
-4. **Logs**: Implemente sistema de logs para monitoramento
-5. **Testes**: Adicione testes unitários e de integração
-
-## 🐛 Solução de problemas
-
-### Erro de conexão com MySQL
-- Verifique se o MySQL está rodando
-- Confirme as credenciais no arquivo `.env`
-- Teste a conexão: `mysql -u root -p`
-
-### Erro de porta em uso
-- Mude a porta no arquivo `.env`
-- Ou mate o processo que está usando a porta: `lsof -ti:3001 | xargs kill -9`
-
-### Erro de módulo não encontrado
-- Execute `npm install` novamente
-- Verifique se todas as dependências estão instaladas 
