@@ -6,9 +6,9 @@ function MainCard({ isEditing, profileImage }) {
   const [profileData, setProfileData] = useState({
     nome: usuario?.nome || '',
     idade: usuario?.idade || '',
-    profissao: usuario?.profissao || '',
+    profissao: usuario?.ocupacao || '',
     endereco: usuario?.endereco || '',
-    sobre: usuario?.sobre || ''
+    sobre: usuario?.descricao || ''
   });
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState('');
@@ -24,6 +24,16 @@ function MainCard({ isEditing, profileImage }) {
   const salvarAlteracoes = async () => {
     setCarregando(true);
     setErro('');
+    
+    const dadosParaEnviar = {
+      nome: profileData.nome,
+      email: usuario.email, 
+      idade: profileData.idade ? parseInt(profileData.idade) : null,
+      ocupacao: profileData.profissao,
+      endereco: profileData.endereco,
+      descricao: profileData.sobre
+    };
+    
     try {
       const response = await fetch(`http://localhost:3001/api/usuario/${usuario.id}`, {
         method: 'PUT',
@@ -31,22 +41,22 @@ function MainCard({ isEditing, profileImage }) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: `Bearer ${token}` } : {})
         },
-        body: JSON.stringify({
-          nome: profileData.nome,
-          email: usuario.email, 
-          idade: profileData.idade ? parseInt(profileData.idade) : null,
-          profissao: profileData.profissao,
-          endereco: profileData.endereco,
-          sobre: profileData.sobre
-        })
+        body: JSON.stringify(dadosParaEnviar)
       });
+      
       const data = await response.json();
+      
       if (data.success) {
-        localStorage.setItem('usuario', JSON.stringify({
+        const usuarioAtualizado = {
           ...usuario,
-          ...profileData,
-          idade: profileData.idade ? parseInt(profileData.idade) : null
-        }));
+          nome: profileData.nome,
+          idade: profileData.idade ? parseInt(profileData.idade) : null,
+          ocupacao: profileData.profissao,
+          endereco: profileData.endereco,
+          descricao: profileData.sobre
+        };
+        
+        localStorage.setItem('usuario', JSON.stringify(usuarioAtualizado));
       } else {
         setErro(data.message || 'Erro ao salvar alterações');
       }

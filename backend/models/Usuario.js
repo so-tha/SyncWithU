@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 class Usuario {
   static async listarTodos() {
     try {
-      const [rows] = await pool.execute('SELECT id, nome, email, telefone, idade, created_at FROM usuarios');
+      const [rows] = await pool.execute('SELECT id, nome, email, idade, ocupacao, endereco, descricao, created_at FROM usuarios');
       return rows;
     } catch (error) {
       throw new Error(`Erro ao listar usuários: ${error.message}`);
@@ -14,7 +14,7 @@ class Usuario {
   static async buscarPorId(id) {
     try {
       const [rows] = await pool.execute(
-        'SELECT id, nome, email, telefone, idade, created_at FROM usuarios WHERE id = ?',
+        'SELECT id, nome, email, idade, ocupacao, endereco, descricao, created_at FROM usuarios WHERE id = ?',
         [id]
       );
       return rows[0];
@@ -26,7 +26,7 @@ class Usuario {
   static async buscarPorEmail(email) {
     try {
       const [rows] = await pool.execute(
-        'SELECT * FROM usuarios WHERE email = ?',
+        'SELECT id, nome, email, senha, idade, ocupacao, endereco, descricao, created_at FROM usuarios WHERE email = ?',
         [email]
       );
       return rows[0];
@@ -37,16 +37,19 @@ class Usuario {
 
   static async criar(dadosUsuario) {
     try {
-      const { nome, email, senha, idade } = dadosUsuario;
+      const { nome, email, senha, idade, ocupacao, endereco, descricao } = dadosUsuario;
       const saltRounds = 10;
       const senhaHash = await bcrypt.hash(senha, saltRounds);
       
       // Tratar campos vazios
       const idadeProcessada = idade && idade !== '' ? parseInt(idade) : null;
+      const ocupacaoProcessada = ocupacao && ocupacao !== '' ? ocupacao : null;
+      const enderecoProcessado = endereco && endereco !== '' ? endereco : null;
+      const descricaoProcessada = descricao && descricao !== '' ? descricao : null;
       
       const [result] = await pool.execute(
-        'INSERT INTO usuarios (nome, email, senha, idade) VALUES (?, ?, ?, ?)',
-        [nome, email, senhaHash, idadeProcessada]
+        'INSERT INTO usuarios (nome, email, senha, idade, ocupacao, endereco, descricao) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [nome, email, senhaHash, idadeProcessada, ocupacaoProcessada, enderecoProcessado, descricaoProcessada]
       );
       
       return { id: result.insertId, ...dadosUsuario };
@@ -60,13 +63,17 @@ class Usuario {
 
   static async atualizar(id, dadosUsuario) {
     try {
-      const { nome, email,idade } = dadosUsuario;
-      const idadeProcessada = idade && idade !== '' ? parseInt(idade) : null;
+      const { nome, email, idade, ocupacao, endereco, descricao } = dadosUsuario;
       
+      // Tratar campos vazios
+      const idadeProcessada = idade && idade !== '' ? parseInt(idade) : null;
+      const ocupacaoProcessada = ocupacao && ocupacao !== '' ? ocupacao : null;
+      const enderecoProcessado = endereco && endereco !== '' ? endereco : null;
+      const descricaoProcessada = descricao && descricao !== '' ? descricao : null;
       
       const [result] = await pool.execute(
-        'UPDATE usuarios SET nome = ?, email = ?, telefone = ?, idade = ? WHERE id = ?',
-        [nome, email, idadeProcessada, id]
+        'UPDATE usuarios SET nome = ?, email = ?, idade = ?, ocupacao = ?, endereco = ?, descricao = ? WHERE id = ?',
+        [nome, email, idadeProcessada, ocupacaoProcessada, enderecoProcessado, descricaoProcessada, id]
       );
       
       if (result.affectedRows === 0) {
@@ -114,8 +121,10 @@ class Usuario {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
-
-        idade: usuario.idade
+        idade: usuario.idade,
+        ocupacao: usuario.ocupacao,
+        endereco: usuario.endereco,
+        descricao: usuario.descricao
       };
     } catch (error) {
       throw new Error(`Erro na autenticação: ${error.message}`);

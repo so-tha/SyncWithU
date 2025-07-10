@@ -11,7 +11,6 @@ class UsuarioController {
         data: usuarios
       });
     } catch (error) {
-      console.error('Erro ao listar usuários:', error);
       res.status(500).json({
         success: false,
         message: 'Erro interno do servidor',
@@ -38,7 +37,6 @@ class UsuarioController {
         data: usuario
       });
     } catch (error) {
-      console.error('Erro ao buscar usuário:', error);
       res.status(500).json({
         success: false,
         message: 'Erro interno do servidor',
@@ -49,7 +47,7 @@ class UsuarioController {
 
   static async criar(req, res) {
     try {
-      const { nome, email, senha, telefone, idade } = req.body;
+      const { nome, email, senha, idade, ocupacao, endereco, descricao } = req.body;
       
       if (!nome || !email || !senha) {
         return res.status(400).json({
@@ -70,8 +68,10 @@ class UsuarioController {
         nome,
         email,
         senha,
-        telefone,
-        idade
+        idade,
+        ocupacao,
+        endereco,
+        descricao
       });
 
       res.status(201).json({
@@ -81,12 +81,13 @@ class UsuarioController {
           id: novoUsuario.id,
           nome: novoUsuario.nome,
           email: novoUsuario.email,
-          telefone: novoUsuario.telefone,
-          idade: novoUsuario.idade
+          idade: novoUsuario.idade,
+          ocupacao: novoUsuario.ocupacao,
+          endereco: novoUsuario.endereco,
+          descricao: novoUsuario.descricao
         }
       });
     } catch (error) {
-      console.error('Erro ao criar usuário:', error);
       res.status(500).json({
         success: false,
         message: 'Erro interno do servidor',
@@ -98,7 +99,7 @@ class UsuarioController {
   static async atualizar(req, res) {
     try {
       const { id } = req.params;
-      const { nome, email, telefone, idade } = req.body;
+      const { nome, email, idade, ocupacao, endereco, descricao } = req.body;
       
       if (!nome || !email) {
         return res.status(400).json({
@@ -110,8 +111,10 @@ class UsuarioController {
       const usuarioAtualizado = await Usuario.atualizar(id, {
         nome,
         email,
-        telefone,
-        idade
+        idade,
+        ocupacao,
+        endereco,
+        descricao
       });
 
       res.status(200).json({
@@ -120,15 +123,12 @@ class UsuarioController {
         data: usuarioAtualizado
       });
     } catch (error) {
-      console.error('Erro ao atualizar usuário:', error);
-      
       if (error.message === 'Usuário não encontrado') {
         return res.status(404).json({
           success: false,
           message: error.message
         });
       }
-      
       res.status(500).json({
         success: false,
         message: 'Erro interno do servidor',
@@ -147,15 +147,12 @@ class UsuarioController {
         message: resultado.message
       });
     } catch (error) {
-      console.error('Erro ao deletar usuário:', error);
-      
       if (error.message === 'Usuário não encontrado') {
         return res.status(404).json({
           success: false,
           message: error.message
         });
       }
-      
       res.status(500).json({
         success: false,
         message: 'Erro interno do servidor',
@@ -184,13 +181,12 @@ class UsuarioController {
         });
       }
 
-      // Gerar token JWT
       const token = jwt.sign(
         { 
           id: usuario.id, 
           email: usuario.email 
         },
-        process.env.JWT_SECRET || 'sua_chave_secreta_aqui',
+        process.env.JWT_SECRET || '1234',
         { expiresIn: '24h' }
       );
 
@@ -203,7 +199,6 @@ class UsuarioController {
         }
       });
     } catch (error) {
-      console.error('Erro no login:', error);
       res.status(500).json({
         success: false,
         message: 'Erro interno do servidor',

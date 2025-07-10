@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Header({  isEditing = false, setIsEditing = null, onLogout = null }) {
+function Header({  isEditing = false, setIsEditing = null, onLogout = null, onSave = null }) {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
@@ -18,7 +18,13 @@ function Header({  isEditing = false, setIsEditing = null, onLogout = null }) {
         {isEditing && setIsEditing && (
           <button 
             className="menu-btn"
-            onClick={() => setIsEditing(false)}
+            onClick={() => {
+              if (onSave) {
+                onSave().then(() => setIsEditing(false));
+              } else {
+                setIsEditing(false);
+              }
+            }}
           >
             ✓
           </button>
