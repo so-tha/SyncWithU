@@ -71,6 +71,9 @@ function LoginPage() {
                   >
                     {carregando ? 'Entrando...' : 'Login'}
                   </button>
+                  <p className='login-link'>
+                    Não tem uma conta? <a href="/register">Criar conta</a>
+                  </p>
               </form>
           </div>
       </nav>
