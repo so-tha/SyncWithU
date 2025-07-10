@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 class Usuario {
   static async listarTodos() {
     try {
-      const [rows] = await pool.execute('SELECT id, nome, email, idade, ocupacao, endereco, descricao, created_at FROM usuarios');
+      const [rows] = await pool.execute('SELECT id, nome, email, idade, ocupacao, endereco, descricao, foto, created_at FROM usuarios');
       return rows;
     } catch (error) {
       throw new Error(`Erro ao listar usuários: ${error.message}`);
@@ -14,7 +14,7 @@ class Usuario {
   static async buscarPorId(id) {
     try {
       const [rows] = await pool.execute(
-        'SELECT id, nome, email, idade, ocupacao, endereco, descricao, created_at FROM usuarios WHERE id = ?',
+        'SELECT id, nome, email, idade, ocupacao, endereco, descricao, foto, created_at FROM usuarios WHERE id = ?',
         [id]
       );
       return rows[0];
@@ -26,7 +26,7 @@ class Usuario {
   static async buscarPorEmail(email) {
     try {
       const [rows] = await pool.execute(
-        'SELECT id, nome, email, senha, idade, ocupacao, endereco, descricao, created_at FROM usuarios WHERE email = ?',
+        'SELECT id, nome, email, senha, idade, ocupacao, endereco, descricao, foto, created_at FROM usuarios WHERE email = ?',
         [email]
       );
       return rows[0];
@@ -37,7 +37,7 @@ class Usuario {
 
   static async criar(dadosUsuario) {
     try {
-      const { nome, email, senha, idade, ocupacao, endereco, descricao } = dadosUsuario;
+      const { nome, email, senha, idade, ocupacao, endereco, descricao, foto } = dadosUsuario;
       const saltRounds = 10;
       const senhaHash = await bcrypt.hash(senha, saltRounds);
       
@@ -46,10 +46,11 @@ class Usuario {
       const ocupacaoProcessada = ocupacao && ocupacao !== '' ? ocupacao : null;
       const enderecoProcessado = endereco && endereco !== '' ? endereco : null;
       const descricaoProcessada = descricao && descricao !== '' ? descricao : null;
+      const fotoProcessada = foto && foto !== '' ? foto : null;
       
       const [result] = await pool.execute(
-        'INSERT INTO usuarios (nome, email, senha, idade, ocupacao, endereco, descricao) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [nome, email, senhaHash, idadeProcessada, ocupacaoProcessada, enderecoProcessado, descricaoProcessada]
+        'INSERT INTO usuarios (nome, email, senha, idade, ocupacao, endereco, descricao, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [nome, email, senhaHash, idadeProcessada, ocupacaoProcessada, enderecoProcessado, descricaoProcessada, fotoProcessada]
       );
       
       return { id: result.insertId, ...dadosUsuario };
@@ -63,17 +64,18 @@ class Usuario {
 
   static async atualizar(id, dadosUsuario) {
     try {
-      const { nome, email, idade, ocupacao, endereco, descricao } = dadosUsuario;
+      const { nome, email, idade, ocupacao, endereco, descricao, foto } = dadosUsuario;
       
       // Tratar campos vazios
       const idadeProcessada = idade && idade !== '' ? parseInt(idade) : null;
       const ocupacaoProcessada = ocupacao && ocupacao !== '' ? ocupacao : null;
       const enderecoProcessado = endereco && endereco !== '' ? endereco : null;
       const descricaoProcessada = descricao && descricao !== '' ? descricao : null;
+      const fotoProcessada = foto && foto !== '' ? foto : null;
       
       const [result] = await pool.execute(
-        'UPDATE usuarios SET nome = ?, email = ?, idade = ?, ocupacao = ?, endereco = ?, descricao = ? WHERE id = ?',
-        [nome, email, idadeProcessada, ocupacaoProcessada, enderecoProcessado, descricaoProcessada, id]
+        'UPDATE usuarios SET nome = ?, email = ?, idade = ?, ocupacao = ?, endereco = ?, descricao = ?, foto = ? WHERE id = ?',
+        [nome, email, idadeProcessada, ocupacaoProcessada, enderecoProcessado, descricaoProcessada, fotoProcessada, id]
       );
       
       if (result.affectedRows === 0) {
@@ -124,7 +126,8 @@ class Usuario {
         idade: usuario.idade,
         ocupacao: usuario.ocupacao,
         endereco: usuario.endereco,
-        descricao: usuario.descricao
+        descricao: usuario.descricao,
+        foto: usuario.foto
       };
     } catch (error) {
       throw new Error(`Erro na autenticação: ${error.message}`);
