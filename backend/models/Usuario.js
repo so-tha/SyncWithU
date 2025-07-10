@@ -64,15 +64,28 @@ class Usuario {
 
   static async atualizar(id, dadosUsuario) {
     try {
-      const { nome, email, idade, ocupacao, endereco, descricao, foto } = dadosUsuario;
-      
+      // Busca o usuário atual
+      const usuarioAtual = await this.buscarPorId(id);
+      if (!usuarioAtual) {
+        throw new Error('Usuário não encontrado');
+      }
+      const {
+        nome = usuarioAtual.nome,
+        email = usuarioAtual.email,
+        idade = usuarioAtual.idade,
+        ocupacao = usuarioAtual.ocupacao,
+        endereco = usuarioAtual.endereco,
+        descricao = usuarioAtual.descricao,
+        foto = usuarioAtual.foto
+      } = dadosUsuario;
+
       // Tratar campos vazios
-      const idadeProcessada = idade && idade !== '' ? parseInt(idade) : null;
-      const ocupacaoProcessada = ocupacao && ocupacao !== '' ? ocupacao : null;
-      const enderecoProcessado = endereco && endereco !== '' ? endereco : null;
-      const descricaoProcessada = descricao && descricao !== '' ? descricao : null;
-      const fotoProcessada = foto && foto !== '' ? foto : null;
-      
+      const idadeProcessada = idade !== undefined && idade !== '' ? parseInt(idade) : null;
+      const ocupacaoProcessada = ocupacao !== undefined && ocupacao !== '' ? ocupacao : null;
+      const enderecoProcessado = endereco !== undefined && endereco !== '' ? endereco : null;
+      const descricaoProcessada = descricao !== undefined && descricao !== '' ? descricao : null;
+      const fotoProcessada = foto !== undefined && foto !== '' ? foto : null;
+
       const [result] = await pool.execute(
         'UPDATE usuarios SET nome = ?, email = ?, idade = ?, ocupacao = ?, endereco = ?, descricao = ?, foto = ? WHERE id = ?',
         [nome, email, idadeProcessada, ocupacaoProcessada, enderecoProcessado, descricaoProcessada, fotoProcessada, id]
@@ -81,8 +94,8 @@ class Usuario {
       if (result.affectedRows === 0) {
         throw new Error('Usuário não encontrado');
       }
-      
-      return { id, ...dadosUsuario };
+
+      return { id, nome, email, idade, ocupacao, endereco, descricao, foto };
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
         throw new Error('Email já cadastrado');
