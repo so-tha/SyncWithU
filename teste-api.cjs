@@ -36,6 +36,21 @@ async function testEndpoints() {
     console.log(chalk.blue('\nPOST /usuario'));
     console.log(novoUsuario.data);
 
+    // 5. Atualizar usuário (exemplo)
+    const usuarioAtualizado = await api.put(`/usuario/${usuarioId}`, {
+      nome: 'Novo Usuário',
+      email: 'novo@exemplo.com',
+      senha: '1234'
+    });
+    console.log(chalk.blue(`\nPUT /usuario/${usuarioId}`));
+    console.log(usuarioAtualizado.data);
+
+    // 6. Deletar usuário (exemplo)
+    const usuarioDeletado = await api.delete(`/usuario/${usuarioId}`);
+    console.log(chalk.blue(`\nDELETE /usuario/${usuarioId}`));
+    console.log(usuarioDeletado.data);
+
+    
    
 
   } catch (error) {
