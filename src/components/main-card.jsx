@@ -1,13 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 function MainCard({ isEditing, profileImage }) {
+  const usuario = JSON.parse(localStorage.getItem('usuario'));
+  const token = localStorage.getItem('token');
   const [profileData, setProfileData] = useState({
-    nome: 'Thais de Cassia',
-    idade: 25,
-    profissao: 'Desenvolvedora Full Stack',
-    endereco: 'Rio Pomba, MG',
-    sobre: 'Desenvolvedora apaixonada por tecnologia e inovação. Trabalho com React, Node.js e outras tecnologias modernas.'
+    nome: usuario?.nome || '',
+    idade: usuario?.idade || '',
+    profissao: usuario?.profissao || '',
+    endereco: usuario?.endereco || '',
+    sobre: usuario?.sobre || ''
   });
+  const [carregando, setCarregando] = useState(false);
+  const [erro, setErro] = useState('');
+  const prevIsEditing = useRef(isEditing);
+
+  useEffect(() => {
+    if (prevIsEditing.current && !isEditing) {
+      salvarAlteracoes();
+    }
+    prevIsEditing.current = isEditing;
+  }, [isEditing]);
+
+  const salvarAlteracoes = async () => {
+    setCarregando(true);
+    setErro('');
+    try {
+      const response = await fetch(`http://localhost:3001/api/usuario/${usuario.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({
+          nome: profileData.nome,
+          email: usuario.email, 
+          idade: profileData.idade ? parseInt(profileData.idade) : null,
+          profissao: profileData.profissao,
+          endereco: profileData.endereco,
+          sobre: profileData.sobre
+        })
+      });
+      const data = await response.json();
+      if (data.success) {
+        localStorage.setItem('usuario', JSON.stringify({
+          ...usuario,
+          ...profileData,
+          idade: profileData.idade ? parseInt(profileData.idade) : null
+        }));
+      } else {
+        setErro(data.message || 'Erro ao salvar alterações');
+      }
+    } catch {
+      setErro('Erro de conexão ao salvar.');
+    } finally {
+      setCarregando(false);
+    }
+  };
 
   const handleInputChange = (field, value) => {
     setProfileData(prev => ({
@@ -57,6 +105,8 @@ function MainCard({ isEditing, profileImage }) {
               onChange={(e) => handleInputChange('sobre', e.target.value)}
               placeholder="Sobre você"
             />
+            {erro && <p className='erro-mensagem'>{erro}</p>}
+            {carregando && <p className='login-link'>Salvando...</p>}
           </div>
         ) : (
           <>
