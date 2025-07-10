@@ -258,20 +258,19 @@ nav {
   font-weight: 700;
   color: #1976d2;
   margin-bottom: 24px;
-  text-align: justify;
+  text-align: center;
   font-family: 'Manrope', Arial, Helvetica, sans-serif;
   
 }
 .login-form {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 12px;
   align-items: center;
   justify-content: center;
   width: 100%;
   max-width: 420px;
-  padding: 10px;
-  margin-left: 20px;
+  
 }
 
 .login-input{

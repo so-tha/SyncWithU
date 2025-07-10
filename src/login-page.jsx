@@ -27,7 +27,6 @@ function LoginPage() {
       const data = await response.json();
 
       if (data.success) {
-        // Salvando token no localStorage
         localStorage.setItem('token', data.data.token);
         localStorage.setItem('usuario', JSON.stringify(data.data.usuario));
         navigate('/profile');
