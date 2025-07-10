@@ -201,7 +201,6 @@ curl -X PUT https://syncwithu-backend.onrender.com/api/usuario/1 \
   -d '{
     "nome": "João Silva Atualizado",
     "email": "joao.novo@email.com",
-    "telefone": "(11) 88888-8888",
     "data_nascimento": "1990-01-01",
     "rua": "Nova Rua",
     "bairro": "Novo Bairro",
@@ -224,7 +223,6 @@ curl -X DELETE https://syncwithu-backend.onrender.com/api/usuario/1
 | nome | VARCHAR(100) | Nome do usuário |
 | email | VARCHAR(100) | Email único do usuário |
 | senha | VARCHAR(255) | Senha do usuário (hash) |
-| telefone | VARCHAR(20) | Telefone do usuário |
 | data_nascimento | DATE | Data de nascimento (opcional) |
 | rua | VARCHAR(255) | Endereço - Rua |
 | bairro | VARCHAR(255) | Endereço - Bairro |
