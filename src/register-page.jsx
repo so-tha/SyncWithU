@@ -9,7 +9,10 @@ function RegisterPage() {
     nome: '',
     email: '',
     senha: '',
-    idade: ''
+    idade: '',
+    rua: '',
+    bairro: '',
+    estado: ''
   });
   const [erro, setErro] = useState('');
   const [carregando, setCarregando] = useState(false);
@@ -90,6 +93,30 @@ function RegisterPage() {
                     placeholder='Idade' 
                     value={formData.idade}
                     onChange={(e) => handleInputChange('idade', e.target.value)}
+                    required
+                  />
+                  <input 
+                    className='login-input' 
+                    type="text" 
+                    placeholder='Rua' 
+                    value={formData.rua}
+                    onChange={(e) => handleInputChange('rua', e.target.value)}
+                    required
+                  />
+                  <input 
+                    className='login-input' 
+                    type="text" 
+                    placeholder='Bairro' 
+                    value={formData.bairro}
+                    onChange={(e) => handleInputChange('bairro', e.target.value)}
+                    required
+                  />
+                  <input 
+                    className='login-input' 
+                    type="text" 
+                    placeholder='Estado' 
+                    value={formData.estado}
+                    onChange={(e) => handleInputChange('estado', e.target.value)}
                     required
                   />
                   {erro && <p className='erro-mensagem'>{erro}</p>}

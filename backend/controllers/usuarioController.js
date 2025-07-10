@@ -47,7 +47,7 @@ class UsuarioController {
 
   static async criar(req, res) {
     try {
-      const { nome, email, senha, idade, ocupacao, endereco, descricao, foto } = req.body;
+      const { nome, email, senha, idade, ocupacao, rua, bairro, estado, descricao, foto } = req.body;
       
       if (!nome || !email || !senha) {
         return res.status(400).json({
@@ -70,7 +70,9 @@ class UsuarioController {
         senha,
         idade,
         ocupacao,
-        endereco,
+        rua,
+        bairro,
+        estado,
         descricao,
         foto
       });
@@ -84,7 +86,9 @@ class UsuarioController {
           email: novoUsuario.email,
           idade: novoUsuario.idade,
           ocupacao: novoUsuario.ocupacao,
-          endereco: novoUsuario.endereco,
+          rua: novoUsuario.rua,
+          bairro: novoUsuario.bairro,
+          estado: novoUsuario.estado,
           descricao: novoUsuario.descricao,
           foto: novoUsuario.foto
         }
@@ -101,7 +105,7 @@ class UsuarioController {
   static async atualizar(req, res) {
     try {
       const { id } = req.params;
-      const { nome, email, idade, ocupacao, endereco, descricao, foto } = req.body;
+      const { nome, email, idade, ocupacao, rua, bairro, estado, descricao, foto } = req.body;
       
       if (!nome || !email) {
         return res.status(400).json({
@@ -115,7 +119,9 @@ class UsuarioController {
         email,
         idade,
         ocupacao,
-        endereco,
+        rua,
+        bairro,
+        estado,
         descricao,
         foto
       });

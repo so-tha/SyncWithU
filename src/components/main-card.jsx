@@ -7,7 +7,9 @@ function MainCard({ isEditing, profileImage }) {
     nome: usuario?.nome || '',
     idade: usuario?.idade || '',
     profissao: usuario?.ocupacao || '',
-    endereco: usuario?.endereco || '',
+    rua: usuario?.rua || '',
+    bairro: usuario?.bairro || '',
+    estado: usuario?.estado || '',
     sobre: usuario?.descricao || ''
   });
   const [fotoPerfil, setFotoPerfil] = useState(usuario?.foto || profileImage);
@@ -31,7 +33,9 @@ function MainCard({ isEditing, profileImage }) {
       email: usuario.email, 
       idade: profileData.idade ? parseInt(profileData.idade) : null,
       ocupacao: profileData.profissao,
-      endereco: profileData.endereco,
+      rua: profileData.rua,
+      bairro: profileData.bairro,
+      estado: profileData.estado,
       descricao: profileData.sobre
     };
     
@@ -53,7 +57,9 @@ function MainCard({ isEditing, profileImage }) {
           nome: profileData.nome,
           idade: profileData.idade ? parseInt(profileData.idade) : null,
           ocupacao: profileData.profissao,
-          endereco: profileData.endereco,
+          rua: profileData.rua,
+          bairro: profileData.bairro,
+          estado: profileData.estado,
           descricao: profileData.sobre
         };
         
@@ -150,9 +156,23 @@ function MainCard({ isEditing, profileImage }) {
             <input
               className='edit-input'
               type="text"
-              value={profileData.endereco}
-              onChange={(e) => handleInputChange('endereco', e.target.value)}
-              placeholder="Endereço"
+              value={profileData.rua}
+              onChange={e => handleInputChange('rua', e.target.value)}
+              placeholder="Rua"
+            />
+            <input
+              className='edit-input'
+              type="text"
+              value={profileData.bairro}
+              onChange={e => handleInputChange('bairro', e.target.value)}
+              placeholder="Bairro"
+            />
+            <input
+              className='edit-input'
+              type="text"
+              value={profileData.estado}
+              onChange={e => handleInputChange('estado', e.target.value)}
+              placeholder="Estado"
             />
             <textarea
               className='edit-textarea'
@@ -170,7 +190,7 @@ function MainCard({ isEditing, profileImage }) {
               <span className='age'>, {profileData.idade}</span>
             </div>
             <p className='job-address'>{profileData.profissao}</p>
-            <p className='job-address'>{profileData.endereco}</p>
+            <p className='job-address'>{`${profileData.rua}${profileData.rua ? ', ' : ''}${profileData.bairro}${profileData.bairro ? ', ' : ''}${profileData.estado}`}</p>
           </>
         )}
       </div>

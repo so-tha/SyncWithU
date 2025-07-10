@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 class Usuario {
   static async listarTodos() {
     try {
-      const [rows] = await pool.execute('SELECT id, nome, email, idade, ocupacao, endereco, descricao, foto, created_at FROM usuarios');
+      const [rows] = await pool.execute('SELECT id, nome, email, idade, ocupacao, rua, bairro, estado, descricao, foto, created_at FROM usuarios');
       return rows;
     } catch (error) {
       throw new Error(`Erro ao listar usuários: ${error.message}`);
@@ -14,7 +14,7 @@ class Usuario {
   static async buscarPorId(id) {
     try {
       const [rows] = await pool.execute(
-        'SELECT id, nome, email, idade, ocupacao, endereco, descricao, foto, created_at FROM usuarios WHERE id = ?',
+        'SELECT id, nome, email, idade, ocupacao, rua, bairro, estado, descricao, foto, created_at FROM usuarios WHERE id = ?',
         [id]
       );
       return rows[0];
@@ -26,7 +26,7 @@ class Usuario {
   static async buscarPorEmail(email) {
     try {
       const [rows] = await pool.execute(
-        'SELECT id, nome, email, senha, idade, ocupacao, endereco, descricao, foto, created_at FROM usuarios WHERE email = ?',
+        'SELECT id, nome, email, senha, idade, ocupacao, rua, bairro, estado, descricao, foto, created_at FROM usuarios WHERE email = ?',
         [email]
       );
       return rows[0];
@@ -37,20 +37,22 @@ class Usuario {
 
   static async criar(dadosUsuario) {
     try {
-      const { nome, email, senha, idade, ocupacao, endereco, descricao, foto } = dadosUsuario;
+      const { nome, email, senha, idade, ocupacao, rua, bairro, estado, descricao, foto } = dadosUsuario;
       const saltRounds = 10;
       const senhaHash = await bcrypt.hash(senha, saltRounds);
       
       // Tratar campos vazios
       const idadeProcessada = idade && idade !== '' ? parseInt(idade) : null;
       const ocupacaoProcessada = ocupacao && ocupacao !== '' ? ocupacao : null;
-      const enderecoProcessado = endereco && endereco !== '' ? endereco : null;
+      const ruaProcessada = rua && rua !== '' ? rua : null;
+      const bairroProcessado = bairro && bairro !== '' ? bairro : null;
+      const estadoProcessado = estado && estado !== '' ? estado : null;
       const descricaoProcessada = descricao && descricao !== '' ? descricao : null;
       const fotoProcessada = foto && foto !== '' ? foto : null;
       
       const [result] = await pool.execute(
-        'INSERT INTO usuarios (nome, email, senha, idade, ocupacao, endereco, descricao, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-        [nome, email, senhaHash, idadeProcessada, ocupacaoProcessada, enderecoProcessado, descricaoProcessada, fotoProcessada]
+        'INSERT INTO usuarios (nome, email, senha, idade, ocupacao, rua, bairro, estado, descricao, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [nome, email, senhaHash, idadeProcessada, ocupacaoProcessada, ruaProcessada, bairroProcessado, estadoProcessado, descricaoProcessada, fotoProcessada]
       );
       
       return { id: result.insertId, ...dadosUsuario };
@@ -64,7 +66,6 @@ class Usuario {
 
   static async atualizar(id, dadosUsuario) {
     try {
-      // Busca o usuário atual
       const usuarioAtual = await this.buscarPorId(id);
       if (!usuarioAtual) {
         throw new Error('Usuário não encontrado');
@@ -74,28 +75,27 @@ class Usuario {
         email = usuarioAtual.email,
         idade = usuarioAtual.idade,
         ocupacao = usuarioAtual.ocupacao,
-        endereco = usuarioAtual.endereco,
+        rua = usuarioAtual.rua,
+        bairro = usuarioAtual.bairro,
+        estado = usuarioAtual.estado,
         descricao = usuarioAtual.descricao,
         foto = usuarioAtual.foto
       } = dadosUsuario;
-
-      // Tratar campos vazios
       const idadeProcessada = idade !== undefined && idade !== '' ? parseInt(idade) : null;
       const ocupacaoProcessada = ocupacao !== undefined && ocupacao !== '' ? ocupacao : null;
-      const enderecoProcessado = endereco !== undefined && endereco !== '' ? endereco : null;
+      const ruaProcessada = rua !== undefined && rua !== '' ? rua : null;
+      const bairroProcessado = bairro !== undefined && bairro !== '' ? bairro : null;
+      const estadoProcessado = estado !== undefined && estado !== '' ? estado : null;
       const descricaoProcessada = descricao !== undefined && descricao !== '' ? descricao : null;
       const fotoProcessada = foto !== undefined && foto !== '' ? foto : null;
-
       const [result] = await pool.execute(
-        'UPDATE usuarios SET nome = ?, email = ?, idade = ?, ocupacao = ?, endereco = ?, descricao = ?, foto = ? WHERE id = ?',
-        [nome, email, idadeProcessada, ocupacaoProcessada, enderecoProcessado, descricaoProcessada, fotoProcessada, id]
+        'UPDATE usuarios SET nome = ?, email = ?, idade = ?, ocupacao = ?, rua = ?, bairro = ?, estado = ?, descricao = ?, foto = ? WHERE id = ?',
+        [nome, email, idadeProcessada, ocupacaoProcessada, ruaProcessada, bairroProcessado, estadoProcessado, descricaoProcessada, fotoProcessada, id]
       );
-      
       if (result.affectedRows === 0) {
         throw new Error('Usuário não encontrado');
       }
-
-      return { id, nome, email, idade, ocupacao, endereco, descricao, foto };
+      return { id, nome, email, idade, ocupacao, rua, bairro, estado, descricao, foto };
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
         throw new Error('Email já cadastrado');
@@ -138,7 +138,9 @@ class Usuario {
         email: usuario.email,
         idade: usuario.idade,
         ocupacao: usuario.ocupacao,
-        endereco: usuario.endereco,
+        rua: usuario.rua,
+        bairro: usuario.bairro,
+        estado: usuario.estado,
         descricao: usuario.descricao,
         foto: usuario.foto
       };
