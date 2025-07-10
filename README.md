@@ -4,7 +4,7 @@ Sistema completo de gerenciamento de usuários com frontend em React/Vite e back
 
 ## 🌐 Links de Acesso
 
-- **Frontend (Vercel)**: [https://syncwithu.vercel.app](https://syncwithu.vercel.app)
+- **Frontend (Vercel)**: [https://syncwithu.vercel.app]([https://sync-with-u.vercel.app/])
 - **Backend (Render)**: [https://syncwithu-backend.onrender.com](https://syncwithu-backend.onrender.com)
 - **API Base URL**: `https://syncwithu-backend.onrender.com/api`
 
