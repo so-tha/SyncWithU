@@ -6,20 +6,16 @@ Sistema completo de gerenciamento de usuários com frontend em React/Vite e back
 
 ### Frontend
 - **Plataforma**: Vercel
-- **URL**: https://syncwithu.vercel.app
+- **URL**: [https://syncwithu.vercel.app](https://sync-with-u.vercel.app/)
 - **Arquivo de configuração**: `vercel.json`
 
 ### Backend
 - **Plataforma**: Render
-- **URL**: https://syncwithu-backend.onrender.com
 - **Runtime**: Node.js
 
 ### Banco de Dados
 - **Plataforma**: Railway
 - **Tipo**: MySQL
-- **Host**: yamanote.proxy.rlwy.net
-- **Porta**: 54429
-- **SSL**: Habilitado
 
 ## 🛠️ Tecnologias Utilizadas
 
