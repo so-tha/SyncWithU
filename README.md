@@ -2,12 +2,6 @@
 
 Sistema completo de gerenciamento de usuários com frontend em React/Vite e backend em Node.js/Express, com banco de dados MySQL.
 
-## 🌐 Links de Acesso
-
-- **Frontend (Vercel)**: [https://syncwithu.vercel.app]([https://sync-with-u.vercel.app/])
-- **Backend (Render)**: [https://syncwithu-backend.onrender.com](https://syncwithu-backend.onrender.com)
-- **API Base URL**: `https://syncwithu-backend.onrender.com/api`
-
 ## 🚀 Deploy e Hospedagem
 
 ### Frontend
